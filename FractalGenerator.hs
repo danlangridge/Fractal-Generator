@@ -1,5 +1,12 @@
 module Main where
 
+import System.IO
+import Data.Char
+
+pixelValue x y = abs (realZ + imaginaryZ)
+
+creatFile = do 
+     writeFile "fractal.bmp" (map toUpper contents)
 
 getInt = do a <- readLn
             let b = a
