@@ -3,22 +3,32 @@ module Main where
 import System.IO
 import Data.Char
 
+maximum' :: (Ord a) => [a] -> a
+maximum [] = error "maximum of empty list"
+maximum' [x] = x
+maximum' (x:xs)
+    | x > maxTail = x
+    | otherwise = maxTail
+    where maxTail = maximum' xs
+
 pixelValue x y = abs (realZ + imaginaryZ)
 
+{-|
 creatFile = do 
      writeFile "fractal.bmp" (map toUpper contents)
+-}
 
 getInt = do a <- readLn
             let b = a
             return (read b :: Int)
 
-realZ :: float -> float -> float
+realZ :: (Num a) => a -> a -> a 
 realZ a b = a^2 - 1*b^2 + 2 
 
-imaginaryZ :: float -> float -> float
 imaginaryZ a b = 2*a*b
 
-makeBMP x y x_c y_c = do  
+makeBMP x y x_c y_c = 2
+{-|
   if x == x_c && y == y_c
     return
   if x == x_c 
@@ -31,8 +41,9 @@ makeBMP x y x_c y_c = do
        let z_a = realZ x y 
        let z_b = imaginaryZ x y
        makeBMP x y 0 y_c+1 
+-}
 
 makeBMPInit x y = makeBMP x y 0 0
 
 main =
-  makeBMPInit 100 100
+   makeBMPInit 100 100
