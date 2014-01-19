@@ -27,7 +27,8 @@ realZ a b = a^2 - 1*b^2 + 2
 
 imaginaryZ a b = 2*a*b
 
-makeBMP x y x_c y_c = 2
+makeBMP minX maxX minY maxY = [ ( x, y ) | x <- a^2 - 1*b^2 + 2, y <- 2*a*b, 
+                                           a <- [1..3], b <- [1..3] ] 
 {-|
   if x == x_c && y == y_c
     return
@@ -43,7 +44,7 @@ makeBMP x y x_c y_c = 2
        makeBMP x y 0 y_c+1 
 -}
 
-makeBMPInit x y = makeBMP x y 0 0
+makeBMPInit x y = makeBMP -x x -y y
 
 main =
-   makeBMPInit 100 100
+   print (makeBMPInit 100 100)
