@@ -27,8 +27,10 @@ realZ a b = a^2 - 1*b^2 + 2
 
 imaginaryZ a b = 2*a*b
 
-makeBMP minX maxX minY maxY = [ ( x, y ) | x <- a^2 - 1*b^2 + 2, y <- 2*a*b, 
-                                           a <- [1..3], b <- [1..3] ] 
+-- generate a list of real and imaginary pairs used for generating pixel color
+genBMPValues :: (Num a) => a -> a -> a -> a -> [(a, a)]
+genBMPValues minX maxX minY maxY = [ ( x, y ) | let a = [minX..maxX], let b = [minY..maxY],
+                                           x <- a^2 - 1*b^2 + 2, y <- 2*a*b ] 
 {-|
   if x == x_c && y == y_c
     return
@@ -44,7 +46,19 @@ makeBMP minX maxX minY maxY = [ ( x, y ) | x <- a^2 - 1*b^2 + 2, y <- 2*a*b,
        makeBMP x y 0 y_c+1 
 -}
 
-makeBMPInit x y = makeBMP -x x -y y
+-- fill header into bmp file
+makeBMPHeader x y = do
+  return 1
+
+-- generate color value for each pixel given a list of real and imaginary numbers
+generatePixelColors pixelData = 2
+
+
+makeBMP x y = do
+  makeBMPHeader x y
+  let pixelData = genBMPValues(-x x -y y)
+  generatePixelColors pixelData
+
 
 main =
-   print (makeBMPInit 100 100)
+   print (makeBMP 100 100)
